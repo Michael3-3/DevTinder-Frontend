@@ -1,8 +1,8 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../utils/userSlice";
+import { login, logout } from "../utils/userSlice";
 import { BaseUrl } from "../utils/statics";
 const NavBar = () => {
 
@@ -20,6 +20,17 @@ const NavBar = () => {
       console.error("Logout failed", err);
     }
   };
+
+    useEffect(() => {
+    axios.get(BaseUrl + "/profile/view", { withCredentials: true })
+      .then(res => {
+        dispatch(login(res.data));
+      })
+      .catch(() => {
+        dispatch(logout());
+      });
+  }, []);
+
 
   return (
     <div>
@@ -40,7 +51,7 @@ const NavBar = () => {
                 <div className="w-8 rounded-full">
                   <img
                     alt="Tailwind CSS Navbar component"
-                    src="https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg"
+                    src={user.profilePicture }
                   />
                 </div>
               </div>

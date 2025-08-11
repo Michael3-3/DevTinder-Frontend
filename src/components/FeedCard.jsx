@@ -9,7 +9,7 @@ const FeedCard = (item) => {
             <img
               src={item.item.profilePicture || "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg"}
               alt="Shoes"
-            />
+            className="bg-cover"/>
           </figure>
           <div className="card-body">
             <h2 className="card-title pb-2 flex justify-center items-center text-2xl text-amber-100">{item?.item?.firstName  }</h2>
