@@ -31,13 +31,11 @@ const Feed = () => {
 
   return <>
     <div className="feed-container">
-      <h1 className="text-3xl font-bold text-center my-4">Feed</h1>
-      <div className="feed-cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <h1 className="text-3xl font-bold text-center my-2">Feed</h1>
+      <div className="feed-cards gap-4 flex justify-center items-center">
         {feed && feed.length > 0 ? (
-          feed.map((item) =>{
-            return <FeedCard key={item._id} item={item} />;
-          } )
-        ) : (
+             <FeedCard key={feed[0]._id} item={feed[0]} />
+          ) : (
           <p className="text-center">No posts available.</p>
         )}
       </div>

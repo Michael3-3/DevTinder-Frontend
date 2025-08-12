@@ -1,24 +1,29 @@
 import axios from "axios";
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BaseUrl } from "../utils/statics";
-import FeedCard from "./FeedCard";
+import UpdateCard from "./updateCard.jsx";
 import { login, logout } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
+import Feed from "./feed.jsx";
 
-//here the user can view there profile and update it
 const Profile = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null); // ✅ for popup
   const [formData, setFormData] = useState({
-    firstName: user?.firstName,
-    lastName: user?.lastName,
-    email: user?.email,
-    gender: user?.gender,
-    age: user?.age,
-    profilePicture: user?.profilePicture,
-    about: user?.about,
+    firstName: "",
+    lastName: "",
+    email: "",
+    gender: "",
+    age: "",
+    profilePicture: "",
+    about: "",
   });
+
+  // Fetch user profile on mount
   useEffect(() => {
     axios
       .get(BaseUrl + "/profile/view", { withCredentials: true })
@@ -28,19 +33,42 @@ const Profile = () => {
       .catch(() => {
         dispatch(logout());
       });
-  }, []);
+  }, [dispatch]);
 
-  // handle change in the input fields
+  // Sync formData when user changes
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        email: user.email || "",
+        gender: user.gender || "",
+        age: user.age || "",
+        profilePicture: user.profilePicture || "",
+        about: user.about || "",
+      });
+    }
+  }, [user]);
+
   async function handleUpdate() {
-    // Here you would typically send the updated formData to your backend API
-    await axios.patch(
-      BaseUrl + "/profile/update",
-      {},
-      {
+    try {
+      setError(null);
+      setSuccess(null);
+      await axios.patch(BaseUrl + "/profile/update", formData, {
         withCredentials: true,
-      }
-    );
-    console.log("Profile updated", formData);
+      });
+
+      // ✅ show success popup
+      setSuccess("Profile updated successfully!");
+      setTimeout(() => {
+        setSuccess(null);
+      }, 3000);
+      navigate("/feed",{replace:true})
+      console.log("Profile updated", formData);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      setError(error);
+    }
   }
 
   const handleChange = (e) => {
@@ -49,143 +77,156 @@ const Profile = () => {
       [e.target.name]: e.target.value,
     });
   };
-  console.log(user);
-  return (
-    user && (
-      <div cassName="felx">
-        <div className="updateform min-h-screen w-1/2 bg-gray-300 m-20 rounded-4xl">
-          <div className="head flex justify-center items-center text-4xl text-gray-700 text-shadow-lg font-bold p-5">
-            Profile
-          </div>
-          <div className="form ml-12">
-            <div className="name flex ">
-              <div className="firstName">
-                <label className="text-xl text-gray-700 mb-10 pb-5">
-                  First Name:
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="First Name"
-                  pattern="[A-Za-z][A-Za-z0-9\-]*"
-                  minLength="3"
-                  maxLength="30"
-                  onChange={handleChange}
-                  value={formData.firstName || ""}
-                  title="Only letters, numbers or dash"
-                  className="input input-bordered input-primary w-60 max-w-xs p-5"
-                />
-              </div>
-              <div className="lastname">
-                <label className="text-xl text-gray-700 mb-10 pb-5">
-                  Last Name:
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="Last Name"
-                  pattern="[A-Za-z][A-Za-z0-9\-]*"
-                  minLength="3"
-                  maxLength="30"
-                  onChange={handleChange}
-                  value={formData.lastName || ""}
-                  title="Only letters, numbers or dash"
-                  className="input input-bordered input-primary w-60 max-w-xs p-5"
-                />
-              </div>
-            </div>
-            <div className="email my-5">
-              <label className="text-xl text-gray-700 mb-10 pb-5">
-                Email ID:
-              </label>{" "}
-              <br />
-              <input
-                type="email"
-                placeholder="mail@site.com"
-                required
-                onChange={handleChange}
-                value={formData.email || ""}
-                className="input input-bordered input-primary w-full max-w-xs p-5"
-              />
-            </div>
-            <div className="genderAge flex ">
-              <div className="gender">
-                <label
-                  htmlFor="gender"
-                  className="text-xl text-gray-700 mb-10 pb-5">
-                  Gender:
-                </label>
 
-                <select
-                  id="gender"
-                  name="gender"
-                  value={formData.gender}
-                  onChange={handleChange}
-                  className="block w-60 rounded-md border border-gray-800 bg-[#1D232A]  p-2 shadow-lg  focus:border-blue-500 focus:ring focus:ring-gray-900 focus:ring-opacity-50"
-                  required>
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              <div className="age ml-12">
-                <label
-                  htmlFor="age"
-                  className="text-xl text-gray-700 mb-10 pb-5 ">
-                  {" "}
-                  Age:
-                </label>
-                <input
-                  type="number"
-                  id="age"
-                  name="age"
-                  value={formData.age}
-                  onChange={handleChange}
-                  min="0"
-                  className="block w-60 rounded-md border bg-gray-900 border-gray-800 py-2 px-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-                  placeholder="Enter your age"
-                  required
-                />
-              </div>
-            </div>
-            <div className="photoUrl my-4">
-              <label className="text-xl text-gray-700 mb-10 pb-5">
-                Profile Picture URL:
-              </label>{" "}
-              <br />
+  if (!user) {
+    return <div className="text-center text-2xl">Loading...</div>;
+  }
+
+  return (
+    <div className="flex flex-col lg:flex-row gap-6 p-4 relative">
+      {/* ✅ Success popup */}
+      {success && (
+        <div className="fixed top-5 z-[999] right-5 bg-green-500 text-white px-4 py-2 rounded shadow-lg animate-bounce">
+          {success}
+        </div>
+      )}
+
+      {/* Form */}
+      <div className="updateform w-full lg:w-1/2 bg-gray-300 rounded-2xl shadow-lg p-6">
+        <div className="head text-center text-3xl font-bold text-gray-700 mb-6">
+          Profile
+        </div>
+
+        <div className="form space-y-6">
+          {/* Name Fields */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col w-full">
+              <label className="text-lg text-gray-700">First Name:</label>
               <input
-                type="url"
-                name="profilePicture"
+                type="text"
+                name="firstName"
+                required
+                placeholder="First Name"
                 onChange={handleChange}
-                value={formData.profilePicture || ""}
-                placeholder="https://example.com/profile.jpg"
-                className="input input-bordered input-primary w-full max-w-xs p-5"
+                value={formData.firstName}
+                className="input input-bordered input-primary w-full p-3"
               />
             </div>
-            <div className="about">
-              <label className="text-xl text-gray-700 mb-10 pb-5">About:</label>{" "}
-              <br />
-              <textarea
-                name="about"
+            <div className="flex flex-col w-full">
+              <label className="text-lg text-gray-700">Last Name:</label>
+              <input
+                type="text"
+                name="lastName"
+                required
+                placeholder="Last Name"
                 onChange={handleChange}
-                value={formData.about || ""}
-                placeholder="Tell us about yourself"
-                className="textarea textarea-primary w-10/12 max-w-xs p-5"></textarea>
+                value={formData.lastName}
+                className="input input-bordered input-primary w-full p-3"
+              />
             </div>
-            {/* // update button when we click on it the data will be updated */}
-            <div className="updateBtn flex justify-center items-center">
-              <button
-                className="btn btn-primary mt-5 mb-5"
-                onClick={handleUpdate}>
-                Update Profile
-              </button>
+          </div>
+
+          {/* Email */}
+          <div className="flex flex-col">
+            <label className="text-lg text-gray-700">Email ID:</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="mail@site.com"
+              required
+              onChange={handleChange}
+              value={formData.email}
+              className="input input-bordered input-primary w-full p-3"
+            />
+          </div>
+
+          {/* Gender and Age */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col w-full">
+              <label htmlFor="gender" className="text-lg text-gray-700">
+                Gender:
+              </label>
+              <select
+                id="gender"
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+                className="select select-bordered bg-gray-900 text-white w-full p-2"
+                required
+              >
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
             </div>
+            <div className="flex flex-col w-full">
+              <label htmlFor="age" className="text-lg text-gray-700">
+                Age:
+              </label>
+              <input
+                type="number"
+                id="age"
+                name="age"
+                value={formData.age}
+                onChange={handleChange}
+                min="0"
+                className="input input-bordered w-full p-3"
+                placeholder="Enter your age"
+                required
+              />
+            </div>
+          </div>
+
+          {/* Profile Picture */}
+          <div className="flex flex-col">
+            <label className="text-lg text-gray-700">
+              Profile Picture URL:
+            </label>
+            <input
+              type="url"
+              name="profilePicture"
+              onChange={handleChange}
+              value={formData.profilePicture}
+              placeholder="https://example.com/profile.jpg"
+              className="input input-bordered input-primary w-full p-3"
+            />
+          </div>
+
+          {/* About */}
+          <div className="flex flex-col">
+            <label className="text-lg text-gray-700">About:</label>
+            <textarea
+              name="about"
+              onChange={handleChange}
+              value={formData.about}
+              placeholder="Tell us about yourself"
+              className="textarea textarea-primary w-full p-3"
+            ></textarea>
+          </div>
+
+          {/* Update Button */}
+          <div className="flex justify-center">
+            <button
+              className="btn btn-primary w-full sm:w-auto"
+              onClick={handleUpdate}
+            >
+             Update Profile 
+            </button>
+          </div>
+
+          {/* Error msg */}
+          <div className="text-center text-red-500 mt-4">
+            {error && <p>{error.response?.data?.message || "Error occurred"}</p>}
           </div>
         </div>
-        <FeedCard item={user} />
       </div>
-    )
+
+      {/* Preview Card */}
+      <div className="w-full lg:w-1/2 flex justify-center">
+        <UpdateCard item={formData} />
+      </div>
+    </div>
   );
 };
 

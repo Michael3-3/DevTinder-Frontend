@@ -12,7 +12,7 @@ const FeedCard = (item) => {
             className="bg-cover"/>
           </figure>
           <div className="card-body">
-            <h2 className="card-title pb-2 flex justify-center items-center text-2xl text-amber-100">{item?.item?.firstName  }</h2>
+            <h2 className="card-title pb-2 flex justify-center items-center text-2xl text-amber-100">{item?.item?.firstName + " " + item?.item?.lastName  }</h2>
             <p className="pb-3">
                 {item?.item?.about || "No bio available."}
             </p>

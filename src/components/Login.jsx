@@ -3,12 +3,14 @@ import axios from 'axios';
 import { useDispatch} from 'react-redux';
 import { login } from '../utils/userSlice';
 import { BaseUrl } from '../utils/statics';
+import { useNavigate} from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('mikhel@gmail.com');
   const [password, setPassword] = useState('Pass@1234');
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
@@ -23,6 +25,8 @@ const Login = () => {
       dispatch(login(res.data.user));
       setError(null); // Clear any previous error
       console.log("Login successful", res.data);
+      navigate("/feed",{replace:true});
+
     } catch (err) {
       setError(err.response?.data?.message);
     }

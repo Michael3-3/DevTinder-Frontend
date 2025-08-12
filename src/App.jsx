@@ -6,6 +6,7 @@ import Profile from "./components/Profile"
 import Feed from "./components/feed"
 import { Provider } from "react-redux"
 import appStore from "./utils/appStore.js"
+import PageNotFound from "./components/PageNotFound.jsx"
 function App() {
 
 
@@ -23,7 +24,9 @@ function App() {
             <Route path="/signup" element={<SignUp/>}/>
             <Route path="/profile" element={<Profile/>}/>
             <Route path="/feed" element={<Feed/>}/>
+            <Route path="*" element={<PageNotFound/>} />
           </Route>
+          {/* // if the page not found lets show page not found error */}
           
         </Routes>
       </BrowserRouter>
