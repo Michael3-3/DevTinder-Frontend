@@ -12,7 +12,7 @@ const Feed = () => {
   const feed = useSelector((store) => store.feed);
   const fetchFeed = async () => {
     try {
-      if (feed) return feed; // If feed is already set, no need to fetch again
+      if (feed && feed.length>0) return feed; // If feed is already set, no need to fetch again
       // Fetch feed data from the backend
       const response = await axios.get(BaseUrl + "/feed", {
         withCredentials: true,

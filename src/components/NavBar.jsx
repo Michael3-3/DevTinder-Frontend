@@ -78,7 +78,7 @@ const NavBar = () => {
                   <Link to="/profile"> Profile</Link>
                 </li>
                 <li>
-                  <Link to="/connections">Your Connections</Link>
+                  <Link to="/connectionRequest">Your Connections</Link>
                 </li>
 
                 <li>

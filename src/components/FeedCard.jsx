@@ -1,6 +1,29 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { removeFeed } from "../utils/feedSlice";
+import { BaseUrl } from "../utils/statics";
+import axios from "axios";
 
 const FeedCard = (item) => {
+
+  const dispatch=useDispatch();
+
+    const handleStatus = async (status, reqId) => {
+    try {
+      await axios.post(
+        `${BaseUrl}/connectionRequestSending/${status}/${reqId}`,
+        {},
+        { withCredentials: true }
+      );
+      // Remove from Redux store immediately
+      dispatch(removeFeed(reqId));
+    } catch {
+      console.log("error");
+    }
+  };
+
+
+
   return (
     <div>
       <div className="flex flex-col items-center h-screen my-12">
@@ -17,8 +40,16 @@ const FeedCard = (item) => {
                 {item?.item?.about || "No bio available."}
             </p>
             <div className="card-actions justify-end flex">
-              <button className="btn btn-primary">Ignore</button>
-              <button className="btn btn-primary">Interested</button>
+              <button className="btn btn-primary" onClick={
+                ()=>{
+                  handleStatus("ignored",item.item._id.toString())
+                }
+              }>Ignore</button>
+              <button className="btn btn-primary" onClick={
+                ()=>{
+                  handleStatus("interested",item.item._id.toString())
+                }
+              }>Interested</button>
             </div>
           </div>
         </div>
