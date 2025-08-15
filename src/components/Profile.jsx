@@ -54,9 +54,9 @@ const Profile = () => {
     try {
       setError(null);
       setSuccess(null);
-      await axios.patch(BaseUrl + "/profile/update", formData, {
-        withCredentials: true,
-      });
+      
+      const response = await axios.patch(BaseUrl+"/profile/update",formData,{withCredentials:true});
+
 
       // ✅ show success popup
       setSuccess("Profile updated successfully!");
@@ -65,6 +65,7 @@ const Profile = () => {
       }, 3000);
       navigate("/feed",{replace:true})
       console.log("Profile updated", formData);
+      console.log(response)
     } catch (error) {
       console.error("Error updating profile:", error);
       setError(error);

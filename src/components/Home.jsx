@@ -13,7 +13,7 @@ const Home = () => {
         <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8">
           Meet developers who share your skills, passions, and project goals.
           Whether you're looking for a coding partner, a mentor, or a new friend
-          in tech, DevTinder brings the community to you.
+          in tech,DevMeet brings the community to you.
         </p>
         <button className="bg-amber-500 hover:bg-amber-600 cursor-pointer text-white font-semibold py-3 px-6 rounded-lg transition" onClick={()=>navigate("/login")}>
           Get Started 
@@ -29,7 +29,7 @@ const Home = () => {
 
       {/* About Section */}
       <section className="py-20 px-6 text-center">
-        <h2 className="text-3xl font-bold text-gray-200 mb-12">Why DevTinder?</h2>
+        <h2 className="text-3xl font-bold text-gray-200 mb-12">Why DevMeet?</h2>
         <div className="grid md:grid-cols-3 gap-10 text-gray-100 max-w-6xl mx-auto">
           <div>
             <div className="text-amber-500 text-5xl mb-4">🤝</div>
@@ -102,7 +102,7 @@ const Home = () => {
           Ready to Find Your Coding Partner?
         </h2>
         <button className="bg-white cursor-pointer text-amber-600 font-semibold py-3 px-6 rounded-lg hover:bg-gray-100 transition" onClick={()=>(navigate("/login"))}>
-          Join DevTinder Now
+          Join DevMeet Now
         </button>
       </section>
     </div>

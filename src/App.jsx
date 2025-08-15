@@ -10,6 +10,7 @@ import PageNotFound from "./components/PageNotFound.jsx";
 import ConnectionRequest from "./components/ConnectionRequest.jsx";
 import Home from "./components/Home.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import Connections from "./components/Connections.jsx";
 // import { useSelector } from "react-redux"
 function App() {
   // const user = useSelector((state) => state.user);
@@ -25,6 +26,7 @@ function App() {
               <Route path="/" element={<Home />}></Route>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
+
               <Route
                 path="/profile"
                 element={
@@ -41,8 +43,20 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route path="/connectionRequest" element={<ConnectionRequest />}>
-                {" "}
+              <Route
+                path="/connectionRequest"
+                element={
+                  <ProtectedRoute>
+                    <ConnectionRequest />
+                  </ProtectedRoute>
+                }>
+                <Route
+                  path="/connections"
+                  element={
+                    <ProtectedRoute>
+                      <Connections />
+                    </ProtectedRoute>
+                  }></Route>{" "}
               </Route>
               <Route path="*" element={<PageNotFound />} />
             </Route>

@@ -36,7 +36,7 @@ const NavBar = () => {
         <div className="flex-1">
           <div className="btn btn-ghost text-xl">
             {" "}
-            <Link to="/feed">Devtinder</Link>{" "}
+            <Link to="/feed">DevMeet</Link>{" "}
           </div>
         </div>
         <div className="flex gap-2 mr-5 items-center">
@@ -53,7 +53,7 @@ const NavBar = () => {
                 className="cursor-pointer px-4 py-1 rounded-2xl bg-red-400 font-bold flex items-center 
                     text-white shadow-red-900 transition-all duration-100 ease-in-out 
                     hover:bg-red-500 hover:scale-105  hover:shadow-lg">
-                Sign Up
+               <Link to="/signup"> Sign Up </Link>
               </div>
             </>
           )}
@@ -78,7 +78,10 @@ const NavBar = () => {
                   <Link to="/profile"> Profile</Link>
                 </li>
                 <li>
-                  <Link to="/connectionRequest">Your Connections</Link>
+                  <Link to="/connections">Your Connections</Link>
+                </li>
+                <li>
+                  <Link to="/connectionRequest">Connection Requests</Link>
                 </li>
 
                 <li>
