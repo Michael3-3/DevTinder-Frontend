@@ -1,2 +1,2 @@
 
-export const BaseUrl = 'http://16.16.213.72';
+export const BaseUrl = '/api';
