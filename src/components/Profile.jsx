@@ -5,7 +5,7 @@ import { BaseUrl } from "../utils/statics";
 import UpdateCard from "./UpdateCard.jsx";
 import { login, logout } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
-import Feed from "./feed.jsx";
+import Feed from "./Feed.jsx";
 
 const Profile = () => {
   const dispatch = useDispatch();
