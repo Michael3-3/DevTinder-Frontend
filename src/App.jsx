@@ -49,17 +49,18 @@ function App() {
                   <ProtectedRoute>
                     <ConnectionRequest />
                   </ProtectedRoute>
-                }>
+                }
+                />
                 <Route
                   path="/connections"
                   element={
                     <ProtectedRoute>
                       <Connections />
                     </ProtectedRoute>
-                  }></Route>{" "}
-              </Route>
+                  }
+                  />
+                  </Route>
               <Route path="*" element={<PageNotFound />} />
-            </Route>
             {/* // if the page not found lets show page not found error */}
           </Routes>
         </BrowserRouter>

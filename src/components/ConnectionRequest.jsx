@@ -12,7 +12,7 @@ const ConnectionRequest = () => {
   const fetchFeed = async () => {
     try {
       if (feed && feed.length > 0) return; // Only skip if data already exists
-      const response = await axios.get(BaseUrl + "/userConnections", {
+      const response = await axios.get(BaseUrl + "/userConnectionsRequest", {
         withCredentials: true,
       });
       dispatch(setConnectionRequest(response.data.connections)); // ✅ store only array
