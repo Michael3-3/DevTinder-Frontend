@@ -3,7 +3,7 @@ import Body from "./components/Body";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Profile from "./components/Profile";
-import Feed from "./components/feed";
+import Feed from "./components/Feed.jsx";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore.js";
 import PageNotFound from "./components/PageNotFound.jsx";
@@ -39,7 +39,7 @@ function App() {
                 path="/feed"
                 element={
                   <ProtectedRoute>
-                    <Feed />
+                    <Feed/>
                   </ProtectedRoute>
                 }
               />
