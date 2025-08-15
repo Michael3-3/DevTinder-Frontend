@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setConnection } from "../utils/connectionSlice";
 import { BaseUrl } from "../utils/statics";
 import RequestCard from "./RequestCard"; // Make sure this is imported
-import UpdateCard from "./updateCard";
+import UpdateCard from "./UpdateCard";
 
 const Connections = () => {
   const dispatch = useDispatch();

@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BaseUrl } from "../utils/statics";
-import UpdateCard from "./updateCard.jsx";
+import UpdateCard from "./UpdateCard.jsx";
 import { login, logout } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import Feed from "./feed.jsx";
