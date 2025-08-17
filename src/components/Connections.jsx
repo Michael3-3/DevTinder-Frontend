@@ -3,8 +3,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setConnection } from "../utils/connectionSlice";
 import { BaseUrl } from "../utils/statics";
-import RequestCard from "./RequestCard"; // Make sure this is imported
-import UpdateCard from "./UpdateCard";
+import ConnectionCard from "./ConnectionCard"
 
 const Connections = () => {
   const dispatch = useDispatch();
@@ -36,7 +35,7 @@ const Connections = () => {
       <div className="feed-cards gap-4 flex m-10 flex-wrap">
         {connection && connection.length > 0 ? (
           connection.map((item) => (
-            <UpdateCard key={item._id} item={item} />
+            <ConnectionCard key={item._id} item={item} />
           ))
         ) : (
           <p className="w-full text-center text-xl text-gray-500">

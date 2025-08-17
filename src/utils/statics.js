@@ -1,2 +1,2 @@
 
-export const BaseUrl = '/api';
+export const BaseUrl = '/api'; // change to your backend url

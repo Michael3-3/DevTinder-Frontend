@@ -11,6 +11,7 @@ import ConnectionRequest from "./components/ConnectionRequest.jsx";
 import Home from "./components/Home.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Connections from "./components/Connections.jsx";
+import Msg from "./components/Msg.jsx";
 // import { useSelector } from "react-redux"
 function App() {
   // const user = useSelector((state) => state.user);
@@ -39,7 +40,7 @@ function App() {
                 path="/feed"
                 element={
                   <ProtectedRoute>
-                    <Feed/>
+                    <Feed />
                   </ProtectedRoute>
                 }
               />
@@ -50,17 +51,25 @@ function App() {
                     <ConnectionRequest />
                   </ProtectedRoute>
                 }
-                />
-                <Route
-                  path="/connections"
-                  element={
-                    <ProtectedRoute>
-                      <Connections />
-                    </ProtectedRoute>
-                  }
-                  />
-                  </Route>
-              <Route path="*" element={<PageNotFound />} />
+              />
+              <Route
+                path="/connections"
+                element={
+                  <ProtectedRoute>
+                    <Connections />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+            <Route
+              path="/msg/:id/:name"
+              element={
+                <ProtectedRoute>
+                  <Msg />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<PageNotFound />} />
             {/* // if the page not found lets show page not found error */}
           </Routes>
         </BrowserRouter>
