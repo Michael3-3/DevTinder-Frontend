@@ -4,6 +4,7 @@ import axios from "axios";
 import { createSocketConnection } from "../utils/socket";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { BaseUrl } from "../utils/statics";
 
 const Msg = () => {
   const { id: targetId, name } = useParams(); // expecting /msg/:id/:name
@@ -29,7 +30,7 @@ const Msg = () => {
       setLoading(true);
       try {
         const { data } = await axios.get(
-          `http://localhost:3001/api/messages/${userId}/${targetId}`,
+          `${BaseUrl}/api/messages/${userId}/${targetId}`,
           { withCredentials: true }
         );
         setMessages(data);
